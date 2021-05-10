@@ -1,0 +1,31 @@
+""" @model """
+type Note {
+    _id: GraphbackObjectID!
+    title: String
+    type: NoteTypes
+    version: Int!
+    completed: Boolean
+    content: ContentType
+    created: DateTime!
+    updated: DateTime!
+
+
+}
+
+enum NoteTypes {
+    List
+    Text
+}
+
+type File {
+
+}
+
+enum ContentType {
+    File
+    List
+    Text
+}
+
+scalar DateTime
+scalar GraphbackObjectID

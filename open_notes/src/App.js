@@ -1,13 +1,5 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
-import React from 'react';
-import type {Node} from 'react';
+import React, { useState } from 'react';
+import type { Node } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -18,15 +10,15 @@ import {
   View,
 } from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 
-const Section = ({children, title}): Node => {
+import { useQuery } from '@apollo/react-hooks';
+import { useOfflineMutation, useNetworkStatus } from 'react-offix-hooks';
+import { findNotes, createNote } from './graphql/gql';
+import { mutateOptions } from './helpers';
+import { Error, Header, NoteList } from './components';
+
+const Section = ({ children, title }): Node => {
   const isDarkMode = useColorScheme() === 'dark';
   return (
     <View style={styles.sectionContainer}>
@@ -53,11 +45,36 @@ const Section = ({children, title}): Node => {
 };
 
 const App: () => Node = () => {
+  const { loading, error, data, subscribeToMore } = useQuery(findNotes);
+  const [createNote] = useOfflineMutation(createNote, mutateOptions.add);
+  const [modalActive, setModalActive] = useState(false);
+
   const isDarkMode = useColorScheme() === 'dark';
+
+  const isOnline = useNetworkStatus();
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
+
+  if (error) {
+    return <Error error={error} />;
+  }
+
+  //if (loading) return <ActivityIndicator
+  //         animating={true}
+  //         color={'#3d5afe'}
+  //         size={'large'}
+  //         style={{
+  //           position: 'absolute',
+  //           left: 0,
+  //           right: 0,
+  //           top: 0,
+  //           bottom: 0,
+  //           alignItems: 'center',
+  //           justifyContent: 'center',
+  //         }}
+  //       />;
 
   return (
     <SafeAreaView style={backgroundStyle}>
@@ -69,22 +86,14 @@ const App: () => Node = () => {
         <View
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.js</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
+          }}
+        />
+        <View>
+          <Text>OFFIX TODO React</Text>
+          <Text>A simple todo app using offix and graphback</Text>
+          <Text>Network status: {isOnline ? 'Online' : 'Offline'}</Text>
         </View>
+        {/*<NoteList notes={data.findNotes} subscribeToMore={subscribeToMore} />*/}
       </ScrollView>
     </SafeAreaView>
   );

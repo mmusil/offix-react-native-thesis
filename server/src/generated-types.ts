@@ -10,8 +10,9 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  DateTime: any;
   GraphbackObjectID: string;
+  /** The javascript `Date` as integer. Type represents date and time as number of milliseconds from start of UNIX epoch. */
+  GraphbackTimestamp: number;
 };
 
 export type BooleanInput = {
@@ -19,32 +20,19 @@ export type BooleanInput = {
   eq?: Maybe<Scalars['Boolean']>;
 };
 
-export type ContentType = File | List | Text;
+export type CreateItemInput = {
+  position?: Maybe<Scalars['Int']>;
+  completed?: Maybe<Scalars['Boolean']>;
+  text?: Maybe<Scalars['String']>;
+  itemId?: Maybe<Scalars['GraphbackObjectID']>;
+};
 
 export type CreateNoteInput = {
   title?: Maybe<Scalars['String']>;
   type: NoteTypes;
   version: Scalars['Int'];
   completed?: Maybe<Scalars['Boolean']>;
-  created: Scalars['DateTime'];
-  updated: Scalars['DateTime'];
-};
-
-
-export type DateTimeInput = {
-  ne?: Maybe<Scalars['DateTime']>;
-  eq?: Maybe<Scalars['DateTime']>;
-  le?: Maybe<Scalars['DateTime']>;
-  lt?: Maybe<Scalars['DateTime']>;
-  ge?: Maybe<Scalars['DateTime']>;
-  gt?: Maybe<Scalars['DateTime']>;
-  in?: Maybe<Array<Scalars['DateTime']>>;
-  between?: Maybe<Array<Scalars['DateTime']>>;
-};
-
-export type File = {
-  __typename?: 'File';
-  content?: Maybe<Scalars['String']>;
+  text?: Maybe<Scalars['String']>;
 };
 
 
@@ -59,6 +47,18 @@ export type GraphbackObjectIdInput = {
   between?: Maybe<Array<Scalars['GraphbackObjectID']>>;
 };
 
+
+export type GraphbackTimestampInput = {
+  ne?: Maybe<Scalars['GraphbackTimestamp']>;
+  eq?: Maybe<Scalars['GraphbackTimestamp']>;
+  le?: Maybe<Scalars['GraphbackTimestamp']>;
+  lt?: Maybe<Scalars['GraphbackTimestamp']>;
+  ge?: Maybe<Scalars['GraphbackTimestamp']>;
+  gt?: Maybe<Scalars['GraphbackTimestamp']>;
+  in?: Maybe<Array<Scalars['GraphbackTimestamp']>>;
+  between?: Maybe<Array<Scalars['GraphbackTimestamp']>>;
+};
+
 export type IntInput = {
   ne?: Maybe<Scalars['Int']>;
   eq?: Maybe<Scalars['Int']>;
@@ -70,11 +70,57 @@ export type IntInput = {
   between?: Maybe<Array<Scalars['Int']>>;
 };
 
-export type List = {
-  __typename?: 'List';
+/**
+ * @model
+ * @datasync(
+ *   ttl: 5184000
+ * )
+ */
+export type Item = {
+  __typename?: 'Item';
   _id: Scalars['GraphbackObjectID'];
-  /** @oneToMany(field: 'list') */
-  content?: Maybe<Array<Maybe<Scalars['String']>>>;
+  position?: Maybe<Scalars['Int']>;
+  completed?: Maybe<Scalars['Boolean']>;
+  text?: Maybe<Scalars['String']>;
+  /** @manyToOne(field: 'list', key: 'itemId') */
+  item?: Maybe<Note>;
+};
+
+export type ItemFilter = {
+  _id?: Maybe<GraphbackObjectIdInput>;
+  position?: Maybe<IntInput>;
+  completed?: Maybe<BooleanInput>;
+  text?: Maybe<StringInput>;
+  itemId?: Maybe<GraphbackObjectIdInput>;
+  and?: Maybe<Array<ItemFilter>>;
+  or?: Maybe<Array<ItemFilter>>;
+  not?: Maybe<ItemFilter>;
+};
+
+export type ItemResultList = {
+  __typename?: 'ItemResultList';
+  items: Array<Maybe<Item>>;
+  offset?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  count?: Maybe<Scalars['Int']>;
+};
+
+export type ItemSubscriptionFilter = {
+  and?: Maybe<Array<ItemSubscriptionFilter>>;
+  or?: Maybe<Array<ItemSubscriptionFilter>>;
+  not?: Maybe<ItemSubscriptionFilter>;
+  _id?: Maybe<GraphbackObjectIdInput>;
+  position?: Maybe<IntInput>;
+  completed?: Maybe<BooleanInput>;
+  text?: Maybe<StringInput>;
+};
+
+export type MutateItemInput = {
+  _id: Scalars['GraphbackObjectID'];
+  position?: Maybe<Scalars['Int']>;
+  completed?: Maybe<Scalars['Boolean']>;
+  text?: Maybe<Scalars['String']>;
+  itemId?: Maybe<Scalars['GraphbackObjectID']>;
 };
 
 export type MutateNoteInput = {
@@ -83,8 +129,7 @@ export type MutateNoteInput = {
   type?: Maybe<NoteTypes>;
   version?: Maybe<Scalars['Int']>;
   completed?: Maybe<Scalars['Boolean']>;
-  created?: Maybe<Scalars['DateTime']>;
-  updated?: Maybe<Scalars['DateTime']>;
+  text?: Maybe<Scalars['String']>;
 };
 
 export type Mutation = {
@@ -92,6 +137,9 @@ export type Mutation = {
   createNote?: Maybe<Note>;
   updateNote?: Maybe<Note>;
   deleteNote?: Maybe<Note>;
+  createItem?: Maybe<Item>;
+  updateItem?: Maybe<Item>;
+  deleteItem?: Maybe<Item>;
 };
 
 
@@ -109,10 +157,26 @@ export type MutationDeleteNoteArgs = {
   input: MutateNoteInput;
 };
 
+
+export type MutationCreateItemArgs = {
+  input: CreateItemInput;
+};
+
+
+export type MutationUpdateItemArgs = {
+  input: MutateItemInput;
+};
+
+
+export type MutationDeleteItemArgs = {
+  input: MutateItemInput;
+};
+
 /**
  * @model
+ * @versioned
  * @datasync(
- * ttl: 5184000
+ *   ttl: 5184000
  * )
  */
 export type Note = {
@@ -122,9 +186,29 @@ export type Note = {
   type: NoteTypes;
   version: Scalars['Int'];
   completed?: Maybe<Scalars['Boolean']>;
-  content?: Maybe<ContentType>;
-  created: Scalars['DateTime'];
-  updated: Scalars['DateTime'];
+  text?: Maybe<Scalars['String']>;
+  /**
+   * @oneToMany(field: 'item', key: 'itemId')
+   * @db(type: 'json')
+   * @oneToMany(field: 'item')
+   */
+  list?: Maybe<Array<Maybe<Item>>>;
+  /** @createdAt */
+  createdAt?: Maybe<Scalars['GraphbackTimestamp']>;
+  /** @updatedAt */
+  updatedAt?: Maybe<Scalars['GraphbackTimestamp']>;
+};
+
+
+/**
+ * @model
+ * @versioned
+ * @datasync(
+ *   ttl: 5184000
+ * )
+ */
+export type NoteListArgs = {
+  filter?: Maybe<ItemFilter>;
 };
 
 export type NoteFilter = {
@@ -133,11 +217,12 @@ export type NoteFilter = {
   type?: Maybe<StringInput>;
   version?: Maybe<IntInput>;
   completed?: Maybe<BooleanInput>;
-  created?: Maybe<DateTimeInput>;
-  updated?: Maybe<DateTimeInput>;
+  text?: Maybe<StringInput>;
   and?: Maybe<Array<NoteFilter>>;
   or?: Maybe<Array<NoteFilter>>;
   not?: Maybe<NoteFilter>;
+  createdAt?: Maybe<GraphbackTimestampInput>;
+  updatedAt?: Maybe<GraphbackTimestampInput>;
 };
 
 export type NoteResultList = {
@@ -157,8 +242,7 @@ export type NoteSubscriptionFilter = {
   type?: Maybe<StringInput>;
   version?: Maybe<IntInput>;
   completed?: Maybe<BooleanInput>;
-  created?: Maybe<DateTimeInput>;
-  updated?: Maybe<DateTimeInput>;
+  text?: Maybe<StringInput>;
 };
 
 export enum NoteTypes {
@@ -178,9 +262,11 @@ export type PageRequest = {
 
 export type Query = {
   __typename?: 'Query';
-  getNotes?: Maybe<Array<Maybe<Note>>>;
+  getDraftNotes?: Maybe<Array<Maybe<Note>>>;
   getNote?: Maybe<Note>;
   findNotes: NoteResultList;
+  getItem?: Maybe<Item>;
+  findItems: ItemResultList;
 };
 
 
@@ -191,6 +277,18 @@ export type QueryGetNoteArgs = {
 
 export type QueryFindNotesArgs = {
   filter?: Maybe<NoteFilter>;
+  page?: Maybe<PageRequest>;
+  orderBy?: Maybe<OrderByInput>;
+};
+
+
+export type QueryGetItemArgs = {
+  id: Scalars['GraphbackObjectID'];
+};
+
+
+export type QueryFindItemsArgs = {
+  filter?: Maybe<ItemFilter>;
   page?: Maybe<PageRequest>;
   orderBy?: Maybe<OrderByInput>;
 };
@@ -218,6 +316,9 @@ export type Subscription = {
   newNote: Note;
   updatedNote: Note;
   deletedNote: Note;
+  newItem: Item;
+  updatedItem: Item;
+  deletedItem: Item;
 };
 
 
@@ -235,8 +336,17 @@ export type SubscriptionDeletedNoteArgs = {
   filter?: Maybe<NoteSubscriptionFilter>;
 };
 
-export type Text = {
-  __typename?: 'Text';
-  _id: Scalars['GraphbackObjectID'];
-  content?: Maybe<Scalars['String']>;
+
+export type SubscriptionNewItemArgs = {
+  filter?: Maybe<ItemSubscriptionFilter>;
+};
+
+
+export type SubscriptionUpdatedItemArgs = {
+  filter?: Maybe<ItemSubscriptionFilter>;
+};
+
+
+export type SubscriptionDeletedItemArgs = {
+  filter?: Maybe<ItemSubscriptionFilter>;
 };

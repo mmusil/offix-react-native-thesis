@@ -8,6 +8,9 @@ extensions:
       graphback-schema:
         format: graphql
         outputPath: ./src/schema/schema.graphql
+      graphback-client:
+        format: 'graphql'
+        outputFile: ../open_notes/src/graphql/graphback.graphql
   codegen:
     generates:
       ./src/generated-types.ts:
