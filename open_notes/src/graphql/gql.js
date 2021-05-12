@@ -75,6 +75,7 @@ export const findNotes = gql`
       count
     }
   }
+  ${NoteExpandedFields}
 `;
 
 export const getNote = gql`
@@ -83,6 +84,7 @@ export const getNote = gql`
       ...NoteExpandedFields
     }
   }
+  ${NoteExpandedFields}
 `;
 
 export const findItems = gql`
@@ -100,6 +102,7 @@ export const findItems = gql`
       count
     }
   }
+  ${ItemExpandedFields}
 `;
 
 export const getItem = gql`
@@ -108,6 +111,7 @@ export const getItem = gql`
       ...ItemExpandedFields
     }
   }
+  ${ItemExpandedFields}
 `;
 
 export const createNote = gql`
@@ -116,6 +120,7 @@ export const createNote = gql`
       ...NoteFields
     }
   }
+  ${NoteFields}
 `;
 
 export const updateNote = gql`
@@ -124,6 +129,7 @@ export const updateNote = gql`
       ...NoteFields
     }
   }
+  ${NoteFields}
 `;
 
 export const deleteNote = gql`
@@ -132,6 +138,7 @@ export const deleteNote = gql`
       ...NoteFields
     }
   }
+  ${NoteFields}
 `;
 
 export const createItem = gql`
@@ -140,6 +147,7 @@ export const createItem = gql`
       ...ItemFields
     }
   }
+  ${ItemFields}
 `;
 
 export const updateItem = gql`
@@ -148,6 +156,7 @@ export const updateItem = gql`
       ...ItemFields
     }
   }
+  ${ItemFields}
 `;
 
 export const deleteItem = gql`
@@ -156,6 +165,7 @@ export const deleteItem = gql`
       ...ItemFields
     }
   }
+  ${ItemFields}
 `;
 
 export const newNote = gql`
@@ -164,6 +174,7 @@ export const newNote = gql`
       ...NoteFields
     }
   }
+  ${NoteFields}
 `;
 
 export const updatedNote = gql`
@@ -172,6 +183,7 @@ export const updatedNote = gql`
       ...NoteFields
     }
   }
+  ${NoteFields}
 `;
 
 export const deletedNote = gql`
@@ -180,6 +192,7 @@ export const deletedNote = gql`
       ...NoteFields
     }
   }
+  ${NoteFields}
 `;
 
 export const newItem = gql`
@@ -188,6 +201,7 @@ export const newItem = gql`
       ...ItemFields
     }
   }
+  ${ItemFields}
 `;
 
 export const updatedItem = gql`
@@ -196,6 +210,7 @@ export const updatedItem = gql`
       ...ItemFields
     }
   }
+  ${ItemFields}
 `;
 
 export const deletedItem = gql`
@@ -204,4 +219,5 @@ export const deletedItem = gql`
       ...ItemFields
     }
   }
+  ${ItemFields}
 `;

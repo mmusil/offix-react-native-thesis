@@ -5,11 +5,13 @@ import { ApolloProvider } from '@apollo/react-hooks';
 import {
   ActivityIndicator,
   DefaultTheme,
+  DarkTheme,
   Provider as PaperProvider,
 } from 'react-native-paper';
 import App from './App';
-import { Text } from 'react-native';
+import { Text, useColorScheme } from 'react-native';
 import { clientConfig } from './clientConfig';
+import { Loading } from './components';
 
 const client = new ApolloOfflineClient(clientConfig);
 
@@ -20,29 +22,16 @@ export const Offix = () => {
     client.init().then(() => setInitialized(true));
   }, []);
 
+  const isDarkMode = useColorScheme() === 'dark';
+
   // If client is still initializing,
   // display loading screen
   if (!initialized) {
-    return (
-      <ActivityIndicator
-        animating={true}
-        color={'#3d5afe'}
-        size={'large'}
-        style={{
-          position: 'absolute',
-          left: 0,
-          right: 0,
-          top: 0,
-          bottom: 0,
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      />
-    );
+    return <Loading />;
   }
 
   const theme = {
-    ...DefaultTheme,
+    ...(isDarkMode === true ? DarkTheme : DefaultTheme),
     // Specify custom property
     myOwnProperty: true,
     // Specify custom property in nested object

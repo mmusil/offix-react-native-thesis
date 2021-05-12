@@ -34,7 +34,7 @@ async function start() {
     db,
     conflictConfig: {
       models: {
-        Comment: {
+        Note: {
           enabled: true
         }
       }

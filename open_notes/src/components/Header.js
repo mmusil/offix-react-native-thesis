@@ -16,9 +16,9 @@ export const Header = () => {
     // <Appbar.Header style={{ color: colors.secondary }}>
     <Appbar.Header theme={{ colors: { primary: 'orange', text: 'white' } }}>
       {/*<Appbar.BackAction onPress={_goBack} />*/}
-      <Appbar.Content title="Open Notes" color='white'/>
-      <Appbar.Action icon="magnify" onPress={_handleSearch} color='white'/>
-      <Appbar.Action icon="dots-vertical" onPress={_handleMore} color='white'/>
+      <Appbar.Content title="Open Notes" color="white" />
+      <Appbar.Action icon="magnify" onPress={_handleSearch} color="white" />
+      <Appbar.Action icon="dots-vertical" onPress={_handleMore} color="white" />
     </Appbar.Header>
   );
 };
@@ -32,6 +32,5 @@ const styles = StyleSheet.create({
   },
   header: {
     color: '#FFF',
-
   },
 });

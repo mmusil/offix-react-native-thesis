@@ -1,4 +1,4 @@
 import * as mutateOptions from './mutateOptions';
-//import * as subscriptionOptions from './subscriptionOptions';
+import * as subscriptionOptions from './subscriptionOptions';
 
-export { mutateOptions, /*subscriptionOptions*/ };
+export { mutateOptions, subscriptionOptions };
