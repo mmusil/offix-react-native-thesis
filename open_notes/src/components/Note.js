@@ -1,15 +1,19 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { List, Title, useTheme } from 'react-native-paper';
 import { ListItem } from './ListItem';
 
 export const Note = ({ note, editNote, deleteNote }) => {
   const { colors } = useTheme();
 
+
+
   if (note.type === 'Text') {
     return (
       <View style={styles.note}>
-        <Title numberOfLines={1} style={styles.title}>{note.title}</Title>
+        <Title numberOfLines={1} style={styles.title}>
+          {note.title}
+        </Title>
         <Text
           numberOfLines={4}
           style={(styles.content, { paddingHorizontal: 5 })}>
@@ -19,13 +23,17 @@ export const Note = ({ note, editNote, deleteNote }) => {
     );
   }
   return (
-    <View style={styles.note}>
-      <List.Section>
-        <Title numberOfLines={1} style={styles.title}>{note.title}</Title>
-        {note.list &&
-          note.list.map(item => {
-            return <ListItem item={item} key={item._id} />;
-          })}
+    <View numberOfLines={4} style={styles.note}>
+      <List.Section numberOfLines={4}>
+        <Title numberOfLines={1} style={styles.title}>
+          {note.title}
+        </Title>
+        <ScrollView contentInsetAdjustmentBehavior="automatic">
+          {note.list &&
+            note.list.map(item => {
+              return <ListItem item={item} key={item._id} />;
+            })}
+        </ScrollView>
       </List.Section>
     </View>
   );
@@ -44,6 +52,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#C2C2C2',
     paddingBottom: 5,
+    maxHeight: '30%',
   },
   title: {
     fontSize: 16,

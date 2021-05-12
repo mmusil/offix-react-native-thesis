@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 
 import { Appbar, useTheme } from 'react-native-paper';
 
-export const Header = () => {
+export const Header = ({ isModal, title, cancel }) => {
   const _goBack = () => console.log('Went back');
 
   const _handleSearch = () => console.log('Searching');
@@ -11,6 +11,15 @@ export const Header = () => {
   const _handleMore = () => console.log('Shown more');
 
   const { colors } = useTheme();
+
+  if ( isModal ) {
+    return (
+      <Appbar.Header theme={{ colors: { primary: 'orange', text: 'white' } }}>
+        <Appbar.BackAction color="white" onPress={cancel} />
+        <Appbar.Content title={ title } color="white" />
+      </Appbar.Header>
+    )
+  }
 
   return (
     // <Appbar.Header style={{ color: colors.secondary }}>
