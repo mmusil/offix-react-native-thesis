@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { View, Button, TextInput, StyleSheet } from 'react-native';
+import { Appbar } from 'react-native-paper';
+import { Header } from './Header';
 
 export const CreateNote = ({ createNote, cancel }) => {
   const [title, setTitle] = useState();
@@ -23,6 +25,7 @@ export const CreateNote = ({ createNote, cancel }) => {
   };
 
   const handleError = error => {
+    error.preventDefault();
     // if (error.offline) {
     //   error.watchOfflineChange();
     // } else {
@@ -33,28 +36,33 @@ export const CreateNote = ({ createNote, cancel }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <TextInput
-        type="text"
-        name="title"
-        placeholder="Title"
-        onChangeText={content => setTitle(content)}
-        value={title}
+    <View>
+      <Header
+        isModal={true}
+        title="Create a Note"
+        cancel={cancel}
+        save={handleSubmit}
       />
-      <TextInput
-        name="text"
-        placeholder="Text"
-        multiline
-        onChangeText={content => {
-          console.log(content);
-          setText(content);
-        }}
-        value={text}
-      />
-      <Button title="Close" onPress={cancel} />
-      {/* <i className="icon icon-cross" /> */}
-      <Button title="Submit" onPress={handleSubmit} />
-      {/* <i className="icon icon-check" /> */}
+      <View style={styles.container}>
+        <TextInput
+          type="text"
+          name="title"
+          placeholder="Title"
+          onChangeText={content => setTitle(content)}
+          value={title}
+          style={{ fontSize: 24, fontWeight: 'bold' }}
+        />
+        <TextInput
+          name="text"
+          placeholder="Text"
+          multiline
+          onChangeText={content => {
+            console.log(content);
+            setText(content);
+          }}
+          value={text}
+        />
+      </View>
     </View>
   );
 };
@@ -62,6 +70,6 @@ export const CreateNote = ({ createNote, cancel }) => {
 const styles = StyleSheet.create({
   container: {
     marginHorizontal: 8,
-    alignItems: 'flex-start',
+    flexDirection: 'column',
   },
 });

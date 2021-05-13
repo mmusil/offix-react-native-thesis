@@ -42,7 +42,7 @@ export const Note = ({ note, editNote, deleteNote }) => {
 const styles = StyleSheet.create({
   note: {
     marginHorizontal: 8,
-    marginVertical: 5,
+    marginTop: 8,
     flex: 4,
     minWidth: '40%',
     maxWidth: '46%',

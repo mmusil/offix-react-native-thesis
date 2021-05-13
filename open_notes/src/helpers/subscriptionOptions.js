@@ -8,6 +8,7 @@ export const add = createSubscriptionOptions({
   subscriptionQuery: newNote,
   cacheUpdateQuery: findNotes,
   operationType: CacheOperation.ADD,
+  returnField: 'items',
 });
 
 // use offix-client helpers to create the required
@@ -16,6 +17,7 @@ export const edit = createSubscriptionOptions({
   subscriptionQuery: updatedNote,
   cacheUpdateQuery: findNotes,
   operationType: CacheOperation.REFRESH,
+  returnField: 'items',
 });
 
 // Custom options for delete subscription event
@@ -25,7 +27,7 @@ export const remove = {
   document: deletedNote,
   updateQuery: (prev, { subscriptionData }) => {
     if (!subscriptionData.data) {
-      return prev;
+      return prev.items;
     }
 
     const { data } = subscriptionData;

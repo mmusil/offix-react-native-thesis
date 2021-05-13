@@ -54,7 +54,7 @@ const Section = ({ children, title }): Node => {
 
 const App: () => Node = () => {
   const { loading, error, data, subscribeToMore } = useQuery(findNotes);
-  const [createNote] = useOfflineMutation(createNote, mutateOptions.add);
+  const [useCreateNote] = useOfflineMutation(createNote, mutateOptions.add);
   const [modalActive, setModalActive] = useState(false);
 
   const isDarkMode = useColorScheme() === 'dark';
@@ -78,24 +78,11 @@ const App: () => Node = () => {
     return <Loading />;
   }
 
-  // data.findNotes.items[3] = JSON.parse(JSON.stringify(data.findNotes.items[2]));
-  // data.findNotes.items[3]._id = "609a69977c0933406db328ad";
-  //
-  // data.findNotes.items[4] = JSON.parse(JSON.stringify(data.findNotes.items[2]));
-  // data.findNotes.items[4]._id = "609a2fdb7c0933406db328cc";
-  //
-  // data.findNotes.items[5] = JSON.parse(JSON.stringify(data.findNotes.items[2]));
-  // data.findNotes.items[5]._id = "609a2fdb7c0933406db328dd";
-  // data.findNotes.items[5].text =
-  //   'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Etiam commodo dui eget wisi. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Integer in sapien. Sed convallis magna eu sem. Nullam rhoncus aliquam metus. Donec vitae arcu. ';
-  //
-  // data.findNotes.items[6] = JSON.parse(JSON.stringify(data.findNotes.items[2]));
-  // data.findNotes.items[6]._id = "609a2fdb7c0933406db328bc";
 
   return (
     <SafeAreaView style={(backgroundStyle, styles.sectionContainer)}>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <Header title="Open Notes"/>
+      <Header title="Open Notes" />
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         style={backgroundStyle}>
@@ -105,7 +92,7 @@ const App: () => Node = () => {
         // }}
         >
           <View>
-            <Text>Network status: {isOnline ? 'Online' : 'Offline'}</Text>
+            {/*<Text>Network status: {isOnline ? 'Online' : 'Offline'}</Text>*/}
             <NoteList
               notes={data.findNotes.items}
               subscribeToMore={subscribeToMore}
@@ -119,7 +106,7 @@ const App: () => Node = () => {
         active={modalActive}
         close={toggleModal}
         Component={() => (
-          <CreateNote createNote={createNote} cancel={toggleModal} />
+          <CreateNote createNote={useCreateNote} cancel={toggleModal} />
         )}
       />
       <AddButton onPress={toggleModal} />
