@@ -8,7 +8,7 @@ import { Platform } from 'react-native';
 import { ReactNativeNetworkStatus } from './helpers/ReactNativeNetworkStatus';
 
 const appDomain =
-  Platform.OS === 'ios' ? 'localhost:4000' : '10.0.2.2:4000'; //192.168.0.116
+  Platform.OS === 'ios' ? 'localhost:4000' : '10.0.2.2:4000';
 
 const wsLink = new WebSocketLink({
   uri: `ws://${appDomain}/graphql`,
