@@ -10,6 +10,7 @@ import {
   View,
 } from 'react-native';
 
+import { useTheme } from 'react-native-paper';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 import { useQuery } from '@apollo/react-hooks';
@@ -59,6 +60,7 @@ const App: () => Node = () => {
 
   const isDarkMode = useColorScheme() === 'dark';
   const colorTheme = useColorScheme();
+  const { colors } = useTheme();
 
   const isOnline = useNetworkStatus();
 
@@ -78,10 +80,12 @@ const App: () => Node = () => {
     return <Loading />;
   }
 
-
   return (
     <SafeAreaView style={(backgroundStyle, styles.sectionContainer)}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+      <StatusBar
+        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+        backgroundColor={colors.primary_darker}
+      />
       <Header title="Open Notes" />
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"

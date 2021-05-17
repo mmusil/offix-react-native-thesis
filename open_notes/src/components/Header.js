@@ -4,7 +4,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { Appbar, useTheme } from 'react-native-paper';
 import { useNetworkStatus } from 'react-offix-hooks';
 
-export const Header = ({ isModal, title, cancel, save }) => {
+export const Header = ({ isModal, title, cancel, save, isTextType }) => {
   const _goBack = () => console.log('Went back');
 
   const _handleSearch = () => console.log('Searching');
@@ -14,6 +14,8 @@ export const Header = ({ isModal, title, cancel, save }) => {
   const { colors } = useTheme();
 
   const isOnline = useNetworkStatus();
+
+  const noteType = isTextType ? 'text' : 'order-bool-ascending-variant';
 
   if (isModal) {
     return (
@@ -26,6 +28,7 @@ export const Header = ({ isModal, title, cancel, save }) => {
           subtitleStyle={styles.subtitle}
           color="white"
         />
+        <Appbar.Action icon={noteType} color="white" />
         <Appbar.Action icon="check" onPress={save} color="white" />
       </Appbar.Header>
     );

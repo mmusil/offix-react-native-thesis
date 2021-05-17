@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { View, Button, TextInput, StyleSheet } from 'react-native';
-import { Appbar } from 'react-native-paper';
+import { Appbar, List } from 'react-native-paper';
 import { Header } from './Header';
+import { ListItem } from './ListItem';
 
 export const CreateNote = ({ createNote, cancel }) => {
   const [title, setTitle] = useState();
-  const [type, setType] = useState('Text');
+  const [isTextType, setType] = useState(true);
   const [text, setText] = useState();
 
   const handleSubmit = e => {
@@ -14,7 +15,7 @@ export const CreateNote = ({ createNote, cancel }) => {
     createNote({
       variables: {
         title,
-        type,
+        type: isTextType ? 'Text' : 'List',
         text,
         version: 1,
         completed: false,
@@ -22,6 +23,11 @@ export const CreateNote = ({ createNote, cancel }) => {
     })
       .then(cancel)
       .catch(handleError);
+  };
+
+  const changeType = () => {
+    setType(!isTextType);
+    console.log(isTextType);
   };
 
   const handleError = error => {
@@ -35,36 +41,81 @@ export const CreateNote = ({ createNote, cancel }) => {
     cancel();
   };
 
-  return (
-    <View>
-      <Header
-        isModal={true}
-        title="Create a Note"
-        cancel={cancel}
-        save={handleSubmit}
-      />
-      <View style={styles.container}>
-        <TextInput
-          type="text"
-          name="title"
-          placeholder="Title"
-          onChangeText={content => setTitle(content)}
-          value={title}
-          style={{ fontSize: 24, fontWeight: 'bold' }}
+  if (isTextType) {
+    return (
+      <View>
+        <Header
+          isModal={true}
+          title="Create a Note"
+          cancel={cancel}
+          save={handleSubmit}
+          isTextType={isTextType}
         />
-        <TextInput
-          name="text"
-          placeholder="Text"
-          multiline
-          onChangeText={content => {
-            console.log(content);
-            setText(content);
+        <Button
+          onPress={() => {
+            setType(!isTextType);
+            console.log(isTextType);
           }}
-          value={text}
+          title="Change note type"
+          color="#3d5afe"
         />
+        <View style={styles.container}>
+          <TextInput
+            type="text"
+            name="title"
+            placeholder="Title"
+            onChangeText={content => setTitle(content)}
+            value={title}
+            style={{ fontSize: 24, fontWeight: 'bold' }}
+          />
+          <TextInput
+            name="text"
+            placeholder="Text"
+            multiline
+            onChangeText={content => {
+              console.log(content);
+              setText(content);
+            }}
+            value={text}
+          />
+        </View>
       </View>
-    </View>
-  );
+    );
+  } else {
+    return (
+      <View>
+        <Header
+          isModal={true}
+          title="Create a Note"
+          cancel={cancel}
+          save={handleSubmit}
+          isTextType={isTextType}
+        />
+        <Button
+          onPress={() => {
+            setType(!isTextType);
+            console.log(isTextType);
+          }}
+          title="Change note type"
+          color="#3d5afe"
+        />
+        <View style={styles.container}>
+          <TextInput
+            type="text"
+            name="title"
+            placeholder="Title"
+            onChangeText={content => setTitle(content)}
+            value={title}
+            style={{ fontSize: 24, fontWeight: 'bold' }}
+          />
+          <View>
+            <ListItem item={{}} edit={true} />
+          </View>
+
+        </View>
+      </View>
+    );
+  }
 };
 
 const styles = StyleSheet.create({

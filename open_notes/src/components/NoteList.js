@@ -31,6 +31,7 @@ export const NoteList = ({ notes, subscribeToMore }) => {
     <View
       style={{
         flex: 1,
+        paddingHorizontal: 4,
       }}>
       <View
         style={{

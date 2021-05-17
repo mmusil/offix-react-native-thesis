@@ -1,20 +1,3 @@
-#"""
-#@model
-#@datasync(
-#  ttl: 5184000
-#)
-#"""
-#type Note {
-#  _id: GraphbackObjectID!
-#  title: String!
-#  description: String
-#  """
-#  @oneToMany(field: 'note')
-#  """
-#  comments: [Comment]!
-#}
-
-
 """
 @model
 @versioned
@@ -43,40 +26,6 @@ enum NoteTypes {
 }
 
 
-#type File {
-#  filename: String!
-#  mimetype: String!
-#  encoding: String!
-#}
-
-#type Query {
-#  uploads: [File]
-#}
-
-#type Mutation {
-#  singleUpload(file: Upload!): File!
-#}
-
-#"""
-#@model
-#"""
-#union ContentType = List | Text # | File
-
-#"""
-#@model
-#@datasync(
-#  ttl: 5184000
-#)
-#"""
-#type List {
-#  _id: GraphbackObjectID!
-#  """
-#  @db(type: 'json')
-#  @oneToMany(field: 'item')
-#  """
-#  list: [Item]
-#}
-
 """
 @model
 @datasync(
@@ -90,16 +39,6 @@ type Item {
   text: String
 }
 
-#"""
-#@model
-#@datasync(
-#ttl: 5184000
-#)
-#"""
-#type Text {
-#  _id: GraphbackObjectID!
-#  text: String
-#}
 
 type Query {
   getDraftNotes: [Note]

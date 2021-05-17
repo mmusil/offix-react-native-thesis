@@ -41,11 +41,11 @@ export const Note = ({ note, editNote, deleteNote }) => {
 
 const styles = StyleSheet.create({
   note: {
-    marginHorizontal: 8,
+    marginHorizontal: 4,
     marginTop: 8,
     flex: 4,
-    minWidth: '40%',
-    maxWidth: '46%',
+    minWidth: '42%',
+    maxWidth: '48%',
     backgroundColor: '#FFFFFF',
     paddingHorizontal: 10,
     borderRadius: 10,
