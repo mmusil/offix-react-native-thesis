@@ -1,3 +1,8 @@
+/**
+ * File based on the official documentation
+ * https://offix.dev/docs/offix-0.15.0/offix-cache#multiple-subscriptions
+ */
+
 import { createSubscriptionOptions } from 'offix-client';
 import { CacheOperation } from 'offix-cache';
 import { findNotes, newNote, updatedNote, deletedNote } from '../graphql/gql';
@@ -33,16 +38,16 @@ export const remove = {
     const { data } = subscriptionData;
 
     // get the object key for the todo list
-    // in this case `findAllTodos`
+    // in this case `findNotes`
     const [queryField] = Object.keys(prev);
 
     // get the object key for the mutated
-    // item, in this case `deletedTodo`
+    // item, in this case `deletedNote`
     const [key] = Object.keys(data);
 
     // Get the `prev` object and replace
-    // the `findAllTodos` array with
-    // filtered todo list
+    // the `findNotes` array with
+    // filtered note list
     return {
       ...prev,
       [queryField]: prev[queryField].filter(note => note._id !== data[key]),

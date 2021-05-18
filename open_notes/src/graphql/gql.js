@@ -1,3 +1,7 @@
+/**
+ * File generated using Graphback library
+ */
+
 import gql from 'graphql-tag';
 
 export const NoteFields = gql`

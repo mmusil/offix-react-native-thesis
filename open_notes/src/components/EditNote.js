@@ -1,3 +1,7 @@
+/**
+ * This file was created from the CreateNote.js component
+ */
+
 import React, { useState } from 'react';
 import { View, Button, TextInput, StyleSheet } from 'react-native';
 import { Header } from './Header';

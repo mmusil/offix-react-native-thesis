@@ -1,3 +1,8 @@
+/**
+ * Unused file
+ * @author Marek Musil
+ */
+
 import React from 'react';
 import { View, Text } from 'react-native';
 

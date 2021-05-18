@@ -1,14 +1,11 @@
+/**
+ * @author Marek Musil
+ */
+
 import React, { useEffect } from 'react';
 import { useOfflineMutation } from 'react-offix-hooks';
 import { mutateOptions, subscriptionOptions } from '../helpers';
-import {
-  SafeAreaView,
-  View,
-  FlatList,
-  StyleSheet,
-  Text,
-  StatusBar,
-} from 'react-native';
+import { View } from 'react-native';
 import { Empty } from './Empty';
 import { updateNote, deleteNote } from '../graphql/gql';
 import { Note } from './Note';

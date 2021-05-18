@@ -1,3 +1,7 @@
+/**
+ * @author Marek Musil
+ */
+
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { List, Title, useTheme } from 'react-native-paper';

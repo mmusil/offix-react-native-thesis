@@ -1,3 +1,7 @@
+/**
+ * @author Marek Musil
+ */
+
 import React from 'react';
 import { View, Text, Modal } from 'react-native';
 import { Header } from './index';

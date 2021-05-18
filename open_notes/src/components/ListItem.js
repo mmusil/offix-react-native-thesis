@@ -1,6 +1,9 @@
+/**
+ * @author Marek Musil
+ */
+
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput } from 'react-native';
-import { List } from 'react-native-paper';
 import CheckBox from '@react-native-community/checkbox';
 
 export const ListItem = ({ item, edit }) => {

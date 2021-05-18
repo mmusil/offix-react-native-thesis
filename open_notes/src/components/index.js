@@ -1,3 +1,7 @@
+/**
+ * @author Marek Musil
+ */
+
 import { AddButton } from './AddButton';
 import { CreateNote } from './CreateNote';
 import { Empty } from './Empty';

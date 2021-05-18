@@ -1,5 +1,8 @@
-// Code from the Offix library tutorial
-// https://offix.dev/docs/offix-0.15.0/react-native#integration
+/**
+ * Code from the Offix library tutorial
+ * https://offix.dev/docs/offix-0.15.0/react-native#integration
+ */
+
 import NetInfo from '@react-native-community/netinfo';
 
 export class ReactNativeNetworkStatus {

@@ -1,3 +1,7 @@
+/**
+ * @author Marek Musil
+ */
+
 import React, { useState } from 'react';
 import type { Node } from 'react';
 import {
@@ -55,7 +59,7 @@ const App: () => Node = () => {
   }
 
   return (
-    <SafeAreaView style={(backgroundStyle, styles.sectionContainer)}>
+    <SafeAreaView style={(backgroundStyle, styles.container)}>
       <StatusBar
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={colors.primary_darker}
@@ -88,21 +92,9 @@ const App: () => Node = () => {
 };
 
 const styles = StyleSheet.create({
-  sectionContainer: {
+  container: {
     flex: 1,
     paddingHorizontal: 0,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
   },
 });
 
