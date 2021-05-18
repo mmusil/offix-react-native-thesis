@@ -1,6 +1,8 @@
 # offix-react-native-thesis
 
 ##Server
+Server side was created with [Graphback](https://graphback.dev/) from the [MongoDB+Apollo+DataSync template](https://github.com/aerogear/graphback/tree/master/templates/ts-apollo-mongodb-datasync-backend).
+
 
 ###Prerequisites
 - Node.js 14 or latest
@@ -40,6 +42,8 @@ yarn develop
 ```
 
 ##Client Application
+Client Application uses deprecated version of Offix Client. It is not fully functional.
+Implementation is based on the [Offix Clien Documentation](https://offix.dev/docs/offix-0.15.0/getting-started) and [official example application](https://github.com/aerogear/offix/tree/master/examples/react-native).
 
 ###Prerequisites
 - Node.js 14 or latest

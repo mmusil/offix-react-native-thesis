@@ -27,32 +27,6 @@ import {
   NoteModal,
 } from './components';
 
-const Section = ({ children, title }): Node => {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-};
-
 const App: () => Node = () => {
   const { loading, error, data, subscribeToMore } = useQuery(findNotes);
   const [useCreateNote] = useOfflineMutation(createNote, mutateOptions.add);
@@ -86,17 +60,12 @@ const App: () => Node = () => {
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={colors.primary_darker}
       />
-      <Header title="Open Notes" />
+      <Header title="Open Notes" setType={() => console.log('WTF')} />
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         style={backgroundStyle}>
-        <View
-        // style={{
-        //   backgroundColor: isDarkMode ? Colors.black : Colors.white,
-        // }}
-        >
+        <View>
           <View>
-            {/*<Text>Network status: {isOnline ? 'Online' : 'Offline'}</Text>*/}
             <NoteList
               notes={data.findNotes.items}
               subscribeToMore={subscribeToMore}

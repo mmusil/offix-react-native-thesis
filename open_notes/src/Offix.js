@@ -1,3 +1,7 @@
+/**
+ * This file is a modified version of
+ * https://github.com/aerogear/offix/blob/master/examples/react-native/src/Offix.js
+ */
 import React, { useState, useEffect } from 'react';
 import { ApolloOfflineClient } from 'offix-client';
 import { ApolloOfflineProvider } from 'react-offix-hooks';

@@ -1,3 +1,8 @@
+/**
+ * This file is from the example from official Offix repository
+ * https://github.com/aerogear/offix/blob/master/examples/react-native/src/clientConfig.js
+ */
+
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { split } from 'apollo-link';
 import { HttpLink } from 'apollo-link-http';

@@ -1,32 +1,41 @@
-/**
- * This file was inspired by example application from Offix library
- * https://github.com/aerogear/offix/tree/master/examples/react-native
- */
-
 import React, { useState } from 'react';
 import { View, Button, TextInput, StyleSheet } from 'react-native';
 import { Header } from './Header';
 import { ListItem } from './ListItem';
 
-export const CreateNote = ({ createNote, cancel }) => {
-  const [title, setTitle] = useState();
-  const [isTextType, setType] = useState(true);
+export const EditNote = ({ note, updateNote, cancel }) => {
+  const [title, setTitle] = useState(note.title);
+  const [isTextType, setType] = useState(note.type === 'Text');
   const [text, setText] = useState();
 
   const handleSubmit = e => {
     e.preventDefault();
 
-    createNote({
-      variables: {
-        title,
-        type: isTextType ? 'Text' : 'List',
-        text,
-        version: 1,
-        completed: false,
-      },
-    })
-      .then(cancel)
-      .catch(handleError);
+    if (isTextType) {
+      updateNote({
+        variables: {
+          _id: note._id,
+          title,
+          type: isTextType ? 'Text' : 'List',
+          text,
+          version: 1,
+          completed: false,
+        },
+      })
+        .then(cancel)
+        .catch(handleError);
+    } else {
+      updateNote({
+        variables: {
+          _id: note._id,
+          title,
+          type: isTextType ? 'Text' : 'List',
+          completed: false,
+        },
+      })
+        .then(cancel)
+        .catch(handleError);
+    }
   };
 
   const changeType = () => {
@@ -54,8 +63,6 @@ export const CreateNote = ({ createNote, cancel }) => {
           cancel={cancel}
           save={handleSubmit}
           isTextType={isTextType}
-          setType={setType}
-          changeType={changeType}
         />
         <Button
           onPress={() => {
@@ -117,7 +124,6 @@ export const CreateNote = ({ createNote, cancel }) => {
           <View>
             <ListItem item={{}} edit={true} />
           </View>
-
         </View>
       </View>
     );

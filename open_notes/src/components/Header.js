@@ -4,7 +4,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { Appbar, useTheme } from 'react-native-paper';
 import { useNetworkStatus } from 'react-offix-hooks';
 
-export const Header = ({ isModal, title, cancel, save, isTextType }) => {
+export const Header = ({ isModal, title, cancel, save, isTextType, setType, changeType }) => {
   const _goBack = () => console.log('Went back');
 
   const _handleSearch = () => console.log('Searching');
